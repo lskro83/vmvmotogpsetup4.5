@@ -1,0 +1,293 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>MotoGP Setup Manager V4 — Coach Expert</title>
+<link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+<div class="app">
+
+<header class="topbar">
+  <div class="brand">
+    🏁 MOTOGP <span>SETUP MANAGER</span>
+    <small>Setup Engine V4 · Coach Expert</small>
+  </div>
+
+  <div class="user">
+    👤 <b id="userName">Jérémy</b> · Connecté
+  </div>
+</header>
+
+<nav class="tabs">
+  <button class="active" data-page="saisie">🖊 SAISIE</button>
+  <button data-page="setups">▤ SETUPS</button>
+  <button data-page="profil">● PROFIL</button>
+  <button data-page="coach">🧠 COACH IA</button>
+</nav>
+
+<main class="main">
+
+<!-- ================= SAISIE ================= -->
+
+<section id="saisie" class="section active">
+
+<div class="section-title">
+  <div>
+    <h1>SAISIE DU RUN</h1>
+    <div class="muted">
+      Décris exactement ce que tu ressens sur la moto.
+    </div>
+  </div>
+
+  <button class="btn" id="goCoach">
+    Ouvrir le Coach IA →
+  </button>
+</div>
+
+<div class="card">
+
+<div class="home-grid">
+
+<div class="field">
+<label>Jeu</label>
+<select id="game">
+<option>MotoGP 26</option>
+<option>MotoGP 25</option>
+</select>
+</div>
+
+<div class="field">
+<label>Moto</label>
+<select id="bike">
+<option>Ducati Desmosedici</option>
+<option>Ducati Lenovo</option>
+<option>Yamaha M1</option>
+<option>Yamaha Factory</option>
+<option>Honda LCR</option>
+<option>Honda RC213V</option>
+<option>Aprilia RS-GP</option>
+<option>Aprilia Trackhouse</option>
+<option>KTM RC16</option>
+<option>GASGAS RC16</option>
+<option>Moto2</option>
+<option>Moto3</option>
+</select>
+</div>
+
+<div class="field">
+<label>Circuit</label>
+<select id="track">
+<option>Buriram</option>
+<option>Goiânia</option>
+<option>Austin</option>
+<option>Jerez</option>
+<option>Le Mans</option>
+<option>Barcelona</option>
+<option>Mugello</option>
+<option>Balaton Park</option>
+<option>Brno</option>
+<option>Assen</option>
+<option>Sachsenring</option>
+<option>Silverstone</option>
+<option>MotorLand Aragón</option>
+<option>Misano</option>
+<option>Spielberg</option>
+<option>Motegi</option>
+<option>Mandalika</option>
+<option>Phillip Island</option>
+<option>Sepang</option>
+<option>Lusail</option>
+<option>Portimão</option>
+<option>Valence</option>
+</select>
+</div>
+
+<div class="field">
+<label>Météo</label>
+<select id="weather">
+<option>Sec - Normal</option>
+<option>Sec - Chaud (Grip max)</option>
+<option>Sec - Froid</option>
+<option>Pluie</option>
+<option>Pluie forte</option>
+</select>
+</div>
+
+<div class="field">
+<label>Phase de pilotage</label>
+<select id="phase">
+<option value="freinage">Freinage</option>
+<option value="entree">Entrée de virage</option>
+<option value="milieu">Milieu de virage</option>
+<option value="sortie">Sortie / remise des gaz</option>
+<option value="general">Comportement général</option>
+</select>
+</div>
+
+<div class="field">
+<label>Problème ressenti</label>
+<select id="problem">
+<option value="rear_lift">La roue arrière se soulève trop</option>
+<option value="rear_move">L'arrière bouge trop</option>
+<option value="understeer">La moto élargit / sous-vire</option>
+<option value="oversteer">La moto survire</option>
+<option value="poor_turn">La moto ne tourne pas assez</option>
+<option value="poor_exit">Mauvaise traction à la sortie</option>
+<option value="wheelie">Trop de wheeling</option>
+<option value="brake_lock">L'arrière bloque au freinage</option>
+<option value="bump">La moto est trop sensible aux bosses</option>
+</select>
+</div>
+
+<div class="field" style="grid-column:1/-1">
+<label>Commentaires pilote</label>
+<textarea id="comment"
+placeholder="Ex : au gros freinage du premier virage, l'arrière se déleste puis bouge au relâché du frein..."></textarea>
+</div>
+
+</div>
+</div>
+
+<!-- ================= SETUP MANUEL ================= -->
+
+<div class="card manual-setup-card">
+<div class="manual-head">
+<div>
+<h2>🔧 SAISIE DU SETUP — 100%</h2>
+<div class="muted">
+Entre directement toutes les valeurs de ta moto. Tu peux ensuite publier ce setup ou l'envoyer au Coach IA.
+</div>
+</div>
+<span class="badge">25 réglages + pneus/freins</span>
+</div>
+
+<div id="manualSetup"></div>
+
+<div class="manual-actions">
+<button class="btn secondary" id="resetManualBtn">↺ Remettre les valeurs de base</button>
+<button class="btn blue" id="useGeneratedBtn">⬇ Reprendre le setup Coach IA</button>
+<button class="btn green" id="publishManualBtn">✓ Publier ce setup à 100%</button>
+</div>
+</div>
+
+</section>
+
+
+<!-- ================= COACH IA ================= -->
+
+<section id="coach" class="section">
+
+<div class="section-title">
+<div>
+<h1>🧠 COACH IA MOTOGP — EXPERT</h1>
+<div class="muted">Diagnostic mécanique + calcul du setup + évolution après chaque run.</div>
+</div>
+<span class="pill">Moteur V4 · Anti-répétition actif</span>
+</div>
+
+<div class="layout">
+<div class="card">
+<h3>Contexte du run</h3>
+<div id="coachContext"></div>
+<button class="btn full" id="diagnoseBtn">🔧 Faire le diagnostic</button>
+</div>
+
+<div class="card diagnostic" id="diagnosticCard">
+<div class="diag-head">⚙ DIAGNOSTIC MÉCANIQUE</div>
+<div class="muted" style="margin-top:8px">Sélectionne ton contexte puis lance le diagnostic.</div>
+</div>
+
+<div class="card context">
+<h3>🧠 Logique du moteur</h3>
+<div class="ok">
+✓ Phase de pilotage<br>
+✓ Symptôme mécanique<br>
+✓ Moto / circuit / météo<br>
+✓ Réglages déjà testés<br>
+✓ Historique des runs<br>
+✓ Anti-répétition
+</div>
+<button class="btn" style="margin-top:12px;width:100%" id="generateBtn">⚡ Générer un Setup Expert</button>
+</div>
+</div>
+
+<div class="card" id="expertResult" style="margin-top:14px">
+<div class="empty">Aucun setup calculé pour le moment.</div>
+</div>
+
+<div class="card session" id="sessionBox" style="display:none">
+<h3>🏁 Session d'essai — retour pilote</h3>
+<div class="muted small">Après quelques tours, indique ce qui s'est amélioré ou dégradé.</div>
+<div class="feedback-grid" style="margin-top:12px">
+<div class="field"><label>Entrée / freinage</label><select id="fbEntry"><option value="neutral">Neutre</option><option value="better">Mieux</option><option value="worse">Pire</option></select></div>
+<div class="field"><label>Milieu de virage</label><select id="fbMid"><option value="neutral">Neutre</option><option value="better">Mieux</option><option value="worse">Pire</option></select></div>
+<div class="field"><label>Sortie / traction</label><select id="fbExit"><option value="neutral">Neutre</option><option value="better">Mieux</option><option value="worse">Pire</option></select></div>
+<div class="field"><label>Stabilité générale</label><select id="fbStability"><option value="neutral">Neutre</option><option value="better">Mieux</option><option value="worse">Pire</option></select></div>
+</div>
+<textarea id="runComment" placeholder="Ex : freinage mieux, mais l'arrière pompe encore à la remise des gaz..."></textarea>
+<button class="btn blue" style="margin-top:10px" id="nextRunBtn">Analyser le run → V suivante</button>
+</div>
+
+<div class="card" style="margin-top:14px">
+<h3>📈 Historique d'ingénieur</h3>
+<div class="history" id="history"></div>
+</div>
+
+</section>
+
+
+<!-- ================= SETUPS ================= -->
+
+<section id="setups" class="section">
+<div class="section-title">
+<div>
+<h1>SETUPS PUBLIÉS</h1>
+<div class="muted">Chaque setup conserve tous ses paramètres, y compris le bras oscillant arrière.</div>
+</div>
+</div>
+<div class="setup-list" id="publishedList"></div>
+</section>
+
+
+<!-- ================= PROFIL ================= -->
+
+<section id="profil" class="section">
+<div class="section-title">
+<div>
+<h1>PROFIL PILOTE</h1>
+<div class="muted">Tes essais et tes setups enregistrés.</div>
+</div>
+</div>
+
+<div class="home-grid">
+<div class="card">
+<h3>👤 Jérémy #83</h3>
+<p class="muted">Pilote vMvMotoGP · PS5</p>
+</div>
+
+<div class="card">
+<h3>📊 Statistiques</h3>
+<table class="table">
+<tr><td>Setups publiés</td><td id="statSetups">0</td></tr>
+<tr><td>Runs analysés</td><td id="statRuns">0</td></tr>
+<tr><td>Versions générées</td><td id="statVersions">0</td></tr>
+</table>
+</div>
+
+<div class="card">
+<h3>🧠 Philosophie</h3>
+<p class="muted">Le Coach apprend de tes retours et évite de refaire exactement les réglages déjà testés.</p>
+</div>
+</div>
+</section>
+
+</main>
+</div>
+
+<script src="script.js" defer></script>
+</body>
+</html>
